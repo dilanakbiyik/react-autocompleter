@@ -7,3 +7,5 @@ Build a user interface using the design excercise1.png as reference for layout. 
 - Accessibility
 - Usability
 - Unit test coverage
+
+DONE!
