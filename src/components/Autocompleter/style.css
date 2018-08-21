@@ -1,0 +1,34 @@
+.Autocompleter{
+    padding: 16px;
+    flex: 1;
+    height: 52px;
+    display: flex;
+}
+.Autocompleter .search-area{
+    flex: 1;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #7C8077;
+}
+
+.Autocompleter .search-area svg {
+    fill: #7C8077;
+}
+.Autocompleter .search-area:focus-within {
+    border: 1px solid #000;
+}
+.Autocompleter .search-area:focus-within svg {
+    fill: #000;
+}
+.Autocompleter .search-area form {
+    display: flex;
+    flex: 1 1 auto;
+}
+.Autocompleter .search-area form input {
+    flex: 1 1 auto;
+    padding: 8px 4px;
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+}
