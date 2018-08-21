@@ -9,6 +9,7 @@ import './style.css';
 const URL = 'http://localhost:5000/search';
 
 class Autocompleter extends React.Component {
+    timer = null;
     constructor(props){
         super(props);
         this.state = {
@@ -19,15 +20,16 @@ class Autocompleter extends React.Component {
         };
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.clearInput = this.clearInput.bind(this);
+        this.loadFromServer = this.loadFromServer.bind(this);
     }
     handleSearchChange(event) {
-
+        clearTimeout(this.timer);
         if(this.state.search.length > 1){
             this.setState({
                 search: event.target.value,
                 showClearButton: !!event.target.value
             });
-            this.loadFromServer();
+            this.timer = setTimeout(this.loadFromServer, 1000);
         }else{
             this.setState({
                 search: event.target.value,
@@ -36,7 +38,6 @@ class Autocompleter extends React.Component {
                 loading: false
             });
         }
-
     }
     clearInput(){
         this.setState({
