@@ -40,3 +40,18 @@ it('it should show clear button and clear value when click that button', () => {
     expect(wrapper.state('search')).toBe('');
 });
 
+it('it should not get data if input less than 3', () => {
+    const wrapper = mount(<Autocompleter />);
+    wrapper.find('input').simulate('change', {target: {value: 'tr'}});
+    wrapper.update();
+    expect(wrapper.state('data')).toBe(null);
+});
+
+it('it should get data if input more than 2', () => {
+    const wrapper = mount(<Autocompleter />);
+    wrapper.find('input').simulate('change', {target: {value: 'tru'}});
+    setTimeout(() => {
+        expect(wrapper.state('data')).not.toBe(null);
+    }, 0);
+
+});
