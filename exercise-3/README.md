@@ -19,4 +19,4 @@ Create a service that retrieves the data from the above mentioned API. This data
 - Visibility of results list;
 - Unit test for above scenario's (including a stub for the network request).
 
-STARTED!
+DONE without unit-tests!
