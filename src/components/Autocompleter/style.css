@@ -14,14 +14,14 @@
 
 .Autocompleter .search-area svg {
     fill: #7C8077;
+    margin-right: 8px;
+    cursor: pointer;
 }
 .Autocompleter .search-area:focus-within {
     border: 1px solid #000;
 }
 .Autocompleter .search-area:focus-within svg {
     fill: #000;
-    margin-right: 8px;
-    cursor: pointer;
 }
 .Autocompleter .search-area form {
     display: flex;

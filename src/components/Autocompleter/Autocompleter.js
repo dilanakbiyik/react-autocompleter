@@ -14,6 +14,7 @@ class Autocompleter extends React.Component {
             showClearButton: false
         };
         this.handleSearchChange = this.handleSearchChange.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
     handleSearchChange(event) {
         this.setState({
@@ -21,20 +22,27 @@ class Autocompleter extends React.Component {
             showClearButton: !!event.target.value
         });
     }
+    clearInput(){
+        this.setState({
+            search: '',
+            showClearButton: false
+        });
+    }
     componentDidMount(){
         this.searchInput.focus();
     }
     render() {
-        const { showClearButton } = this.state;
+        const { showClearButton, search } = this.state;
         let clearButton = null;
         if(showClearButton === true){
-            clearButton = <MdClear size={25} />
+            clearButton = <MdClear onClick={this.clearInput} size={25} />
         }
         return (
             <div className="Autocompleter">
                 <div className="search-area">
                     <form>
                         <input ref={(input) => { this.searchInput = input; }}
+                               value={search}
                                onChange={this.handleSearchChange}
                                type="text"
                                placeholder={'Zoeken'} />
