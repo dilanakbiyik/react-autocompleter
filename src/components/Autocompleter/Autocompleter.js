@@ -22,17 +22,20 @@ class Autocompleter extends React.Component {
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.clearInput = this.clearInput.bind(this);
         this.loadFromServer = this.loadFromServer.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
+    }
+    handleKeyUp(){
+        clearTimeout(this.timer);
+        if(this.state.search.length > 2){
+            this.timer = setTimeout(this.loadFromServer, 1000);
+        }
     }
     handleSearchChange(event) {
-        clearTimeout(this.timer);
-        if(this.state.search.length > 1){
+        if(event.target.value.length > 2){
             this.setState({
                 search: event.target.value,
-                showClearButton: !!event.target.value,
-                loading: true,
-                data: null
+                showClearButton: !!event.target.value
             });
-            this.timer = setTimeout(this.loadFromServer, 1000);
         }else{
             this.setState({
                 search: event.target.value,
@@ -41,6 +44,7 @@ class Autocompleter extends React.Component {
                 loading: false
             });
         }
+
     }
     clearInput(){
         this.setState({
@@ -54,19 +58,32 @@ class Autocompleter extends React.Component {
         this.searchInput.focus();
     }
     loadFromServer(){
+        this.setState({
+            loading: true,
+            data: null
+        });
         fetch(`${URL}?q=${this.state.search}`)
             .then(response => response.json())
             .then(data => this.setState({ ...this.state, data, loading: false }));
     }
     showData(){
         if(this.state.data && this.state.data.suggestions){
-            return (
-                <ul>
-                    {this.state.data.suggestions
-                        .filter((val) => val.searchterm.indexOf(this.state.search) > -1)
-                        .map((val, i)=> <li key={`sug${i}`}>{this.splitSearchterm(val.searchterm)}  (<b>{val.nrResults}</b>)</li>)}
-                </ul>
-            )
+            const datas = this.state.data.suggestions
+                .filter((val) => val.searchterm.indexOf(this.state.search) > -1);
+            if(datas.length > 0){
+                return (
+                    <ul>
+                        {
+                            datas.map((val, i)=> <li key={`sug${i}`}>{this.splitSearchterm(val.searchterm)}  (<b>{val.nrResults}</b>)</li>)}
+                    </ul>
+                )
+            }else{
+                return (
+                    <ul>
+                        <li>There is no match!</li>
+                    </ul>
+                )
+            }
         }
         return null;
     }
@@ -99,6 +116,7 @@ class Autocompleter extends React.Component {
                         <input ref={(input) => { this.searchInput = input; }}
                                value={search}
                                onChange={this.handleSearchChange}
+                               onKeyUp={this.handleKeyUp}
                                type="text"
                                placeholder={'Zoeken'} />
                     </form>
