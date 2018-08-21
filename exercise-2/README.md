@@ -8,3 +8,4 @@ Update the user interface from the previous exercise using the design excercise2
 - Unit test coverage
 
 DONE without test!
+STARTED to write tests!
