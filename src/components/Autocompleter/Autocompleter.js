@@ -5,6 +5,7 @@ import {
 } from 'react-icons/md/index';
 
 import './style.css';
+import Loader from "../Loader/Loader";
 
 const URL = 'http://localhost:5000/search';
 
@@ -27,7 +28,9 @@ class Autocompleter extends React.Component {
         if(this.state.search.length > 1){
             this.setState({
                 search: event.target.value,
-                showClearButton: !!event.target.value
+                showClearButton: !!event.target.value,
+                loading: true,
+                data: null
             });
             this.timer = setTimeout(this.loadFromServer, 1000);
         }else{
@@ -67,6 +70,12 @@ class Autocompleter extends React.Component {
         }
         return null;
     }
+    showLoading(){
+        if(this.state.loading === true){
+            return <Loader />
+        }
+        return null;
+    }
     splitSearchterm(term){
         const terms = term.split(this.state.search);
         return (
@@ -97,6 +106,7 @@ class Autocompleter extends React.Component {
                     <MdSearch size={25} />
                 </div>
                 {this.showData()}
+                {this.showLoading()}
             </div>
         );
     }
