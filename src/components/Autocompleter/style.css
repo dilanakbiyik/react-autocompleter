@@ -20,6 +20,8 @@
 }
 .Autocompleter .search-area:focus-within svg {
     fill: #000;
+    margin-right: 8px;
+    cursor: pointer;
 }
 .Autocompleter .search-area form {
     display: flex;
