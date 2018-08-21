@@ -6,21 +6,37 @@ import {
 
 import './style.css';
 
+const URL = 'http://localhost:5000/search';
+
 class Autocompleter extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             search: '',
-            showClearButton: false
+            showClearButton: false,
+            loading: false,
+            data: null
         };
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.clearInput = this.clearInput.bind(this);
     }
     handleSearchChange(event) {
-        this.setState({
-            search: event.target.value,
-            showClearButton: !!event.target.value
-        });
+
+        if(this.state.search.length > 1){
+            this.setState({
+                search: event.target.value,
+                showClearButton: !!event.target.value
+            });
+            this.loadFromServer();
+        }else{
+            this.setState({
+                search: event.target.value,
+                showClearButton: !!event.target.value,
+                data: null,
+                loading: false
+            });
+        }
+
     }
     clearInput(){
         this.setState({
@@ -30,6 +46,21 @@ class Autocompleter extends React.Component {
     }
     componentDidMount(){
         this.searchInput.focus();
+    }
+    loadFromServer(){
+        fetch(`${URL}?q=${this.state.search}`)
+            .then(response => response.json())
+            .then(data => this.setState({ ...this.state, data, loading: false }));
+    }
+    showData(){
+        if(this.state.data && this.state.data.suggestions){
+            return (
+                <ul>
+                    {this.state.data.suggestions.map((val, i)=> <li key={`sug${i}`}>{val.searchterm}<b>{val.nrResults}</b></li>)}
+                </ul>
+            )
+        }
+        return null;
     }
     render() {
         const { showClearButton, search } = this.state;
@@ -50,6 +81,7 @@ class Autocompleter extends React.Component {
                     {clearButton}
                     <MdSearch size={25} />
                 </div>
+                {this.showData()}
             </div>
         );
     }

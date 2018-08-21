@@ -3,6 +3,7 @@
     flex: 1;
     height: 52px;
     display: flex;
+    flex-direction: column;
 }
 .Autocompleter .search-area{
     flex: 1;
