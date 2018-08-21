@@ -41,7 +41,9 @@ class Autocompleter extends React.Component {
     clearInput(){
         this.setState({
             search: '',
-            showClearButton: false
+            showClearButton: false,
+            data: null,
+            loading: false
         });
     }
     componentDidMount(){
@@ -56,11 +58,23 @@ class Autocompleter extends React.Component {
         if(this.state.data && this.state.data.suggestions){
             return (
                 <ul>
-                    {this.state.data.suggestions.map((val, i)=> <li key={`sug${i}`}>{val.searchterm}<b>{val.nrResults}</b></li>)}
+                    {this.state.data.suggestions
+                        .filter((val) => val.searchterm.indexOf(this.state.search) > -1)
+                        .map((val, i)=> <li key={`sug${i}`}>{this.splitSearchterm(val.searchterm)}  (<b>{val.nrResults}</b>)</li>)}
                 </ul>
             )
         }
         return null;
+    }
+    splitSearchterm(term){
+        const terms = term.split(this.state.search);
+        return (
+            <label>
+                {terms[0]}
+                <span>{this.state.search}</span>
+                {terms[1]}
+            </label>
+        )
     }
     render() {
         const { showClearButton, search } = this.state;

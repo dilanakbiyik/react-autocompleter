@@ -35,3 +35,21 @@
     outline: none;
     font-size: 1.4rem;
 }
+
+.Autocompleter ul{
+    position: absolute;
+    top: 52px;
+    left: 16px;
+    right: 16px;
+    list-style: none;
+    padding: 0;
+}
+.Autocompleter ul li{
+    border:1px solid #c1c5bc;
+    border-top: none;
+    padding: 16px;
+}
+
+.Autocompleter ul span{
+    color: #c1c5bc;
+}
