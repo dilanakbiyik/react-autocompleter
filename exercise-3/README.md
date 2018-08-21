@@ -18,3 +18,5 @@ Create a service that retrieves the data from the above mentioned API. This data
 - Data is retrieved asynchronously;
 - Visibility of results list;
 - Unit test for above scenario's (including a stub for the network request).
+
+STARTED!
