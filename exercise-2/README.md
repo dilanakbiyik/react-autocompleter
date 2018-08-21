@@ -7,4 +7,4 @@ Update the user interface from the previous exercise using the design excercise2
 - UI transitions for user interaction (not defined)
 - Unit test coverage
 
-STARTED!
+DONE without test!
